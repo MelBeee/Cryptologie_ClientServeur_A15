@@ -12,49 +12,55 @@ namespace DLL_Algo1CS
     {
         public static string Chiffrer(string Texte)
         {
+            // Il faut préparer l'algorithme qui sera utiliser pour crypter
             PrepareAtbash();
+            // On retourne les données transformées
             return Transform(Texte);
         }
 
         public static string Dechiffrer(string Texte)
         {
+            // Il faut préparer l'algorithme qui sera utiliser pour decrypter
             PrepareAtbash();
+            // On retourne les données transformées
             return Transform(Texte);
         }
 
 
-        static char[] _shift = new char[char.MaxValue];
+        // tableau qui contient tous les caractères 
+        static char[] tabCaractere = new char[char.MaxValue];
 
         public static void PrepareAtbash()
         {
-            // Set these as the same.
+            // Rempli le tableau de tout les caractères
             for (int i = 0; i < char.MaxValue; i++)
             {
-                _shift[i] = (char)i;
+                tabCaractere[i] = (char)i;
             }
-            // Reverse order of capital letters.
+            // Change l'ordre de A a Z pour Z a A pour crypter par la suite
             for (char c = 'A'; c <= 'Z'; c++)
             {
-                _shift[(int)c] = (char)('Z' + 'A' - c);
+                tabCaractere[(int)c] = (char)('Z' + 'A' - c);
             }
-            // Reverse order of lowercase letters.
+            // Change l'ordre de a à z pour z à a pour crypter par la suite 
             for (char c = 'a'; c <= 'z'; c++)
             {
-                _shift[(int)c] = (char)('z' + 'a' - c);
+                tabCaractere[(int)c] = (char)('z' + 'a' - c);
             }
         }
 
-        public static string Transform(string value)
+        // Ici on recoit la chaine de caractere et on la retourne crypté ou décrypter selon le cas
+        public static string Transform(string Texte)
         {
-            // Convert to char array
-            char[] a = value.ToCharArray();
-            // Shift each letter.
+            // on met notre string dans un tableau de char 
+            char[] a = Texte.ToCharArray();
+            // on change chaque lettre une a une
             for (int i = 0; i < a.Length; i++)
             {
                 int t = (int)a[i];
-                a[i] = _shift[t];
+                a[i] = tabCaractere[t];
             }
-            // Return new string.
+            // retourne le tableau de char transformé en string
             return new string(a);
         }
     }
